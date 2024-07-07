@@ -1,5 +1,26 @@
 import React from 'react'
 
+// function toggleDarkOrLightMode() {
+//     console.log('hello');
+//     document.documentElement.classList.toggle('dark');
+// }
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+});
+
+function toggleDarkOrLightMode() {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    }
+}
 
 // import "./src/App.css";
 const navigation = [
@@ -23,25 +44,25 @@ function classNames(...classes) {
 
 function TopBar() {
   return (
-    <div className='bg-slate-100'>
+    <div className='bg-slate-100 dark:bg-gray-950'>
         <div className='mx-auto max-w-7xl '>
             <div className='flex h-16'>
                 <div className='flex flex-none w-1/6  justify-center items-center lg:hidden xl:hidden'>
-                    <div className='px-3 py-2 transition ease-in-out rounded-full  align-middle hover:bg-white'>
+                    <div className='px-3 py-2 transition ease-in-out rounded-full align-middle hover:bg-white dark:hover:bg-gray-900'>
                         <button type='button' title='side-bar-menu'>
-                            <i className="fi fi-ss-menu-burger"></i>
+                            <i className="fi fi-ss-menu-burger dark:text-white"></i>
                         </button>
                     </div>
                 </div>
                 <div className='flex-auto w-3/5 flex justify-center items-center lg:justify-start'>
                     <div className='flex space-x-4'>
-                        <p className="pacifico-regular text-black text-3xl">Rawdon Noronha</p>
+                        <p className="pacifico-regular text-black text-3xl dark:text-white">Rawdon Noronha</p>
                         <div className='flex space-x-4'>
-                            <div className=' justify-center items-center hidden  lg:flex'>
+                            <div className=' justify-center items-center hidden space-x-4 lg:flex'>
                                 {navigation.map((item) => (
                                 <a key={item.name} href={item.href}
                                     className={classNames(
-                                    item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-gray-700 hover:text-white',
+                                    item.current ? 'bg-gray-900 text-white' : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
                                     'rounded-md px-3 py-2 text-sm font-medium'
                                     )}>
                                     {item.name}
@@ -51,10 +72,10 @@ function TopBar() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-auto items-center justify-center lg:justify-end sm:w-1/6 md:1/6'>
+                <div className='flex flex-auto items-center justify-center lg:justify-end sm:w-1/6 md:1/'>
                     <div>
-                        <button className='' title='light-dark-mode'>
-                            <i className="fi fi-ss-brightness animate-bounce" width="40" heigth="40"></i>
+                        <button title='light-dark-mode' onClick={() => toggleDarkOrLightMode()}>
+                            <i className="fi fi-ss-brightness dark:text-white hover:animate-spin hover:duration-200" width="40" heigth="40"></i>
                         </button>
                     </div>
                 </div>
